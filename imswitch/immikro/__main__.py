@@ -1,15 +1,20 @@
-import glob
-from sys import platform
-# used to be, but actions will replace this with the current release TAG ->1.2.9
-__version__ = "1.2.9"
-
-if platform == "linux" or platform == "linux2":
-    IS_HEADLESS = False
-else:
-    IS_HEADLESS = False
+from imswitch import immikro
+from imswitch.imcommon import prepareApp, launchApp
+from imswitch.imcommon.controller import ModuleCommunicationChannel
 
 
-# Copyright (C) 2020-2023 ImSwitch developers
+def main():
+    app = prepareApp()
+    moduleCommChannel = ModuleCommunicationChannel()
+    moduleCommChannel.register(immikro)
+    mainView, mainController = immikro.getMainViewAndController(moduleCommChannel)
+    launchApp(app, mainView, [mainController])
+
+
+if __name__ == '__main__':
+    main()
+
+# Copyright (C) 2020-2021 ImSwitch developers
 # This file is part of ImSwitch.
 #
 # ImSwitch is free software: you can redistribute it and/or modify
